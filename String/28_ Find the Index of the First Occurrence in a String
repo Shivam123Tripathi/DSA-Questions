@@ -1,0 +1,29 @@
+class Solution {
+    public int strStr(String s1, String s2) {
+        // Edge case: empty needle -> return 0 (LeetCode convention)
+        if (s2 == null || s2.length() == 0) return 0;
+
+        int m = s1.length();
+        int n = s2.length();
+
+        // If needle longer than haystack, can't find it
+        if (n > m) return -1;
+
+        // Slide window start from 0 to m-n (inclusive)
+        for (int i = 0; i <= m - n; i++) {
+            int j;
+            // Try to match s2 starting at position i in s1
+            for (j = 0; j < n; j++) {
+                if (s1.charAt(i + j) != s2.charAt(j)) {
+                    // mismatch -> stop this inner loop and try next i
+                    break;
+                }
+            }
+            // If inner loop finished fully (j == n) => full match found
+            if (j == n) return i;
+        }
+
+        // not found
+        return -1;
+    }
+}
